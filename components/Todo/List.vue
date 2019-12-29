@@ -1,14 +1,16 @@
 <template>
   <div>
-    <v-card v-for="todo in todoList" :key="todo.id" class="mb-2">
-      <v-card-title>{{ todo.title }}</v-card-title>
-    </v-card>
+    <todo-card v-for="todo in todoList" :key="todo.id" :todo="todo" class="mb-2" />
   </div>
 </template>
 
 <script>
+import TodoCard from '@/components/Todo/Card'
 export default {
   name: 'TodoLIst',
+  components: {
+    TodoCard
+  },
   props: [ 'todoList' ],
   data () {
     return {

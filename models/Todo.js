@@ -11,4 +11,16 @@ export default class Todo {
   static getList (filter = {}) {
     return mTodo.map(v => new Todo(v))
   }
+
+  static get (id) {
+    console.log(id)
+    const filtered = mTodo.filter(v => {
+      return false
+    })
+    console.log(filtered)
+    if (filtered.length < 1) {
+      return null
+    }
+    return new Todo(filtered[0])
+  }
 }
