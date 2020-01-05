@@ -1,6 +1,11 @@
 <template>
   <div>
-    <todo-card v-for="todo in todoList" :key="todo.id" :todo="todo" class="mb-2" />
+    <todo-card
+      v-for="todo in todoList"
+      :key="todo.id"
+      :todo="todo"
+      class="mb-2"
+    />
   </div>
 </template>
 
@@ -11,17 +16,11 @@ export default {
   components: {
     TodoCard
   },
-  props: [ 'todoList' ],
-  data () {
-    return {
-
-    }
+  props: ['todoList'],
+  data() {
+    return {}
   },
-  created () {
-
-  },
-  methods: {
-
-  }
+  created() {},
+  methods: {}
 }
 </script>

@@ -8,12 +8,12 @@ import Todo from '@/models/Todo'
 export default {
   name: 'TodoDetailPage',
 
-  data () {
+  data() {
     return {
       todo: null
     }
   },
-  created () {
+  created() {
     this.todo = Todo.get(this.$route.params.id)
     console.log(this.todo)
   }

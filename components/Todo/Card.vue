@@ -10,7 +10,7 @@ export default {
   name: 'TodoCard',
   props: ['todo'],
   computed: {
-    detailLink () {
+    detailLink() {
       return `/todo/detail/${this.todo.id}`
     }
   }

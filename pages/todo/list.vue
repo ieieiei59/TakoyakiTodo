@@ -13,16 +13,16 @@ export default {
   components: {
     ListComponent
   },
-  data () {
+  data() {
     return {
       todoList: []
     }
   },
-  created () {
+  created() {
     this.todoList = this.getTodoList()
   },
   methods: {
-    getTodoList () {
+    getTodoList() {
       return Todo.getList()
     }
   }

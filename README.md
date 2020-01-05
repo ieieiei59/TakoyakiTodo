@@ -1,6 +1,6 @@
-# TakoyakiTodo
+# TakoyakiToDo
 
-> Takoyaki Todo
+> My divine Nuxt.js project
 
 ## Build Setup
 
