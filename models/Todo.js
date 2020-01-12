@@ -8,6 +8,7 @@ export default class Todo {
     this.description = json.description
     this.addedAt = json.addedAt
     this.editedAt = json.addedAt
+    this.isCleared = json.isCleared
   }
 
   _getDate(dateData, formatStr = 'yyyy/mm/dd HH:MM') {
