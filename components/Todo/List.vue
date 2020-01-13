@@ -5,7 +5,10 @@
         v-for="todo in todoList"
         @click.stop="openTodoModal(todo)"
         :key="todo.id"
-        :class="{ 'todo-item-container--cleared': todo.isCleared }"
+        :class="{
+          'todo-item-container--cleared': todo.isCleared,
+          '.animation-takoyaki': todo.isCleared
+        }"
         class="todo-item-container"
       >
         <div
@@ -71,6 +74,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+
   .todo-item-container {
     position: relative;
     display: flex;
@@ -98,12 +102,15 @@ export default {
       box-shadow: 0px 0px 39px -11px #113d55;
     }
     &--cleared {
-      background-color: aquamarine;
+      background-image: url('~assets/takoyaki_character.png');
+      background-size: contain;
+      border-radius: 50%;
     }
 
     .todo-item {
       &--cleared {
-        color: gold;
+        background-color: rgba(0, 0, 0, 0.4);
+        color: white;
         text-shadow: 0px 0px 14px #e7e8bc;
       }
     }
