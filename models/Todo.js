@@ -24,6 +24,7 @@ export default class Todo {
   }
 
   static getList(filter = {}) {
+    console.log(filter)
     return mTodo.map((v) => new Todo(v))
   }
 

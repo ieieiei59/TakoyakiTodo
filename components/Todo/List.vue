@@ -3,18 +3,22 @@
     <ul class="todo-list">
       <li
         v-for="todo in todoList"
-        @click.stop="openTodoModal(todo)"
         :key="todo.id"
         :class="{
-          'todo-item-container--cleared': todo.isCleared,
-          '.animation-takoyaki': todo.isCleared
+          'todo-item-container--cleared': todo.isCleared
         }"
         class="todo-item-container"
+        @click.stop="openTodoModal(todo)"
       >
-        <div
-          :class="{ 'todo-item--cleared': todo.isCleared }"
-          class="todo-item"
-        >
+        <transition enter-active-class="animated pulse">
+          <img
+            v-if="todo.isCleared"
+            class="todo-item todo-item--cleared"
+            src="~assets/takoyaki_character.png"
+            alt="takoyaki"
+          />
+        </transition>
+        <div v-if="!todo.isCleared" class="todo-item">
           {{ todo.title }}
         </div>
       </li>
@@ -26,8 +30,8 @@
         <v-card-text>達成しましたか？</v-card-text>
         <v-card-actions>
           <v-btn @click.stop="todoDialog.isActive = false">閉じる</v-btn>
-          <v-spacer></v-spacer>
-          <v-btn @click.stop="clearTodo(todoDialog.todoObj)" color="primary"
+          <v-spacer />
+          <v-btn color="primary" @click.stop="clearTodo(todoDialog.todoObj)"
             >達成</v-btn
           >
         </v-card-actions>
@@ -102,16 +106,17 @@ export default {
       box-shadow: 0px 0px 39px -11px #113d55;
     }
     &--cleared {
-      background-image: url('~assets/takoyaki_character.png');
-      background-size: contain;
+      // background-image: url('~assets/takoyaki_character.png');
+      // background-size: contain;
       border-radius: 50%;
     }
 
     .todo-item {
       &--cleared {
-        background-color: rgba(0, 0, 0, 0.4);
+        // background-color: rgba(0, 0, 0, 0.4);
         color: white;
         text-shadow: 0px 0px 14px #e7e8bc;
+        width: 100%;
       }
     }
   }

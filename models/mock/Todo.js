@@ -14,5 +14,21 @@ export default [
     addedAt: new Date(),
     editedAt: new Date(),
     isCleared: false
+  },
+  {
+    id: 3,
+    title: '設計する',
+    description: 'タコヤキTODOの設計をする。',
+    addedAt: new Date(),
+    editedAt: new Date(),
+    isCleared: false
+  },
+  {
+    id: 4,
+    title: '開発する',
+    description: 'タコヤキTODOの開発をする。',
+    addedAt: new Date(),
+    editedAt: new Date(),
+    isCleared: false
   }
 ]
