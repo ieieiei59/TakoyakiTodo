@@ -23,6 +23,9 @@ module.exports = {
     'no-plusplus': 'off',
     'func-names': 'off',
     'semi': [2, 'never'],
-    'no-console': 'off'
+    'no-console': 'off',
+    'prettier/prettier': ['error', {
+      'endOfline': 'auto'
+    }]
   }
 }
