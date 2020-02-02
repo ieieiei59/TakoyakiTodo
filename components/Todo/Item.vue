@@ -11,12 +11,12 @@
         <img
           v-if="todoItem.isCleared"
           class="todo-item todo-item--cleared"
-          src="~assets/takoyaki_character.png"
+          :src="todoItem.getTakoyakiImageURL()"
           alt="takoyaki"
         />
       </transition>
       <div v-if="!todoItem.isCleared" class="todo-item">
-        {{ todoItem.title }}
+        <h3>{{ todoItem.title }}</h3>
       </div>
     </div>
 
@@ -54,8 +54,8 @@ export default {
       }
     },
     clearTodo() {
-      this.todoItem.isCleared = true
       this.todoDialog.isActive = false
+      this.todoItem.clear()
     }
   }
 }

@@ -1,18 +1,13 @@
-import dateformat from 'dateformat'
 import mTodo from '@/models/mock/Todo'
+import TakoyakiBaseModel from '@/models/TakoyakiBase'
+import TodoClear from '@/models/TodoClear'
 
-export default class Todo {
+export default class Todo extends TakoyakiBaseModel {
   constructor(json) {
-    this.id = json.id
+    super(json)
     this.title = json.title
     this.description = json.description
-    this.addedAt = json.addedAt
-    this.editedAt = json.addedAt
     this.isCleared = json.isCleared
-  }
-
-  _getDate(dateData, formatStr = 'yyyy/mm/dd HH:MM') {
-    return dateformat(dateData, formatStr)
   }
 
   getAddedAt(formatStr = 'yyyy/mm/dd HH:MM') {
@@ -21,6 +16,24 @@ export default class Todo {
 
   getEditedAt(formatStr = 'yyyy/mm/dd HH:MM') {
     return this._getDate(this.editedAt, formatStr)
+  }
+
+  clear() {
+    const clearData = {
+      id: TodoClear.lastId + 1,
+      todo: this,
+      takoyakiId: 1
+    }
+    this.clearObj = new TodoClear(clearData)
+    this.isCleared = true
+  }
+
+  getTakoyakiImageURL() {
+    if (this.isCleared) {
+      return this.clearObj.getTakoyakiImageURL()
+    } else {
+      return ''
+    }
   }
 
   static getList(filter = {}) {
