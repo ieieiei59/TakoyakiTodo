@@ -57,6 +57,10 @@ export default class Todo extends TakoyakiBaseModel {
     }
   }
 
+  async delete() {
+    return await db.todos.delete(this.id)
+  }
+
   async _save() {
     const toSaveJson = {
       id: this.id,
@@ -87,45 +91,26 @@ export default class Todo extends TakoyakiBaseModel {
       }
     }
 
-    console.log(filter)
     const today = utilDate.today
     const tomorrow = utilDate.tomorrow
     const nextWeek = utilDate.nextWeek
     const nextMonth = utilDate.nextMonth
-    console.log(today)
-    console.log(tomorrow)
-    console.log(nextWeek)
-    console.log(nextMonth)
 
     let todos = db.todos
 
     if (filter.daily) {
-      console.log(filter.daily)
       todos = todos.where('deadline').between(today, tomorrow, true, true)
-      console.log(todos)
     } else if (filter.weekly) {
       todos = todos.where('deadline').between(today, nextWeek, true, true)
-      console.log('weekly')
     } else if (filter.monthly) {
       todos = todos.where('deadline').between(today, nextMonth, true, true)
-      console.log('monthly')
     } else {
       todos = todos.toCollection()
     }
 
-    const _todos = todos
-    _todos.each((todo) => {
-      console.log(today, todo.deadline)
-      console.log(today.getTime(), todo.deadline.getTime())
-      console.log(today.getTime() < todo.deadline.getTime())
-      console.log('---------------------')
-    })
-
     todos = todos.offset(filter.offset).limit(filter.limit)
 
     todos = await todos.sortBy('addedAt')
-
-    console.log(todos)
 
     return todos.map((todo) => new Todo(todo))
   }

@@ -6,7 +6,7 @@
         <v-btn color="primary" @click="addCardDialog = true">追加</v-btn>
       </v-row>
     </div>
-    <list-component :todoList="todoList" />
+    <list-component :todoList="todoList" @deleteTodo="deleteTodo" />
 
     <v-dialog v-model="addCardDialog">
       <todo-add-card @added="todoAdded"></todo-add-card>
@@ -42,6 +42,9 @@ export default {
     todoAdded() {
       this.addCardDialog = false
       this.setTodoList()
+    },
+    deleteTodo(todo) {
+      this.todoList = this.todoList.filter((_todo) => _todo.id !== todo.id)
     }
   }
 }

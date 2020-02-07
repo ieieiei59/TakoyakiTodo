@@ -2,7 +2,7 @@
   <div>
     <ul class="todo-list">
       <li class="todo-container" v-for="todo in todoList" :key="todo.id">
-        <todo-item :todoItem="todo"></todo-item>
+        <todo-item :todoItem="todo" @deleted="deleted"></todo-item>
       </li>
     </ul>
   </div>
@@ -14,17 +14,18 @@ export default {
   name: 'TodoList',
   props: { todoList: Array },
   data() {
-    return {
-      todoDialog: {
-        todoObj: null,
-        isActive: false
-      }
-    }
+    return {}
   },
   components: {
     TodoItem
   },
-  created() {}
+  created() {},
+  methods: {
+    deleted(todo) {
+      console.log(todo)
+      this.$emit('deleteTodo', todo)
+    }
+  }
 }
 </script>
 

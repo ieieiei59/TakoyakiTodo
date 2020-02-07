@@ -30,6 +30,7 @@
         <v-card-actions>
           <v-btn @click.stop="todoDialog.isActive = false">閉じる</v-btn>
           <v-spacer />
+          <v-btn color="red" @click.stop="deleteTodo()">削除</v-btn>
           <v-btn color="primary" @click.stop="clearTodo()">達成</v-btn>
         </v-card-actions>
       </v-card>
@@ -59,6 +60,11 @@ export default {
     clearTodo() {
       this.todoDialog.isActive = false
       this.todoItem.clear()
+    },
+    deleteTodo() {
+      this.todoDialog.isActive = false
+      this.todoItem.delete()
+      this.$emit('deleted', this.todoItem)
     }
   }
 }
