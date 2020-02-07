@@ -56,9 +56,10 @@ export default {
     add() {
       if (this.TodoData.deadline === null) {
         const deadline = this.deadlineDate.split('-')
+        console.log(deadline)
         this.TodoData.deadline = new Date(
           deadline[0],
-          deadline[1],
+          deadline[1] - 1,
           deadline[2],
           23,
           59,

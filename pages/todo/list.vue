@@ -1,10 +1,15 @@
 <template>
   <div>
-    <v-btn @click="addCardDialog = true">追加</v-btn>
+    <div class="pa-2 mb-2">
+      <v-row>
+        <v-spacer></v-spacer>
+        <v-btn color="primary" @click="addCardDialog = true">追加</v-btn>
+      </v-row>
+    </div>
     <list-component :todoList="todoList" />
 
     <v-dialog v-model="addCardDialog">
-      <todo-add-card @added="addCardDialog = false"></todo-add-card>
+      <todo-add-card @added="todoAdded"></todo-add-card>
     </v-dialog>
   </div>
 </template>
@@ -27,11 +32,16 @@ export default {
     }
   },
   created() {
-    this.todoList = this.getTodoList()
+    this.setTodoList()
   },
   methods: {
-    getTodoList() {
-      return Todo.getList()
+    async setTodoList() {
+      const filter = {}
+      this.todoList = await Todo.getList(filter)
+    },
+    todoAdded() {
+      this.addCardDialog = false
+      this.setTodoList()
     }
   }
 }

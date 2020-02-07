@@ -23,7 +23,10 @@
     <v-dialog v-model="todoDialog.isActive">
       <v-card v-if="!!todoItem">
         <v-card-title>{{ todoItem.title }}</v-card-title>
-        <v-card-text>達成しましたか？</v-card-text>
+        <v-card-text>
+          <p>{{ todoItem.description }}</p>
+          <p><span>期日: </span>{{ todoItem.getDeadline() }}</p>
+        </v-card-text>
         <v-card-actions>
           <v-btn @click.stop="todoDialog.isActive = false">閉じる</v-btn>
           <v-spacer />
