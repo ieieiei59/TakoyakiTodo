@@ -14,8 +14,14 @@
           :src="todoItem.getTakoyakiImageURL()"
           alt="takoyaki"
         />
+        <img
+          :src="failedTakoyaki.getImageURL()"
+          :alt="failedTakoyaki.name"
+          class="todo-item todo-item--cleared"
+          v-if="todoItem.isFailed()"
+        />
       </transition>
-      <div v-if="!todoItem.isCleared" class="todo-item">
+      <div v-if="!todoItem.isCleared && !todoItem.isFailed()" class="todo-item">
         <h3>{{ todoItem.title }}</h3>
       </div>
     </div>
@@ -40,6 +46,7 @@
 
 <script>
 import Todo from '@@/models/Todo'
+import TakoyakiItem from '@@/models/TakoyakiItem'
 
 export default {
   name: 'TodoItem',
@@ -48,7 +55,8 @@ export default {
     return {
       todoDialog: {
         isActive: false
-      }
+      },
+      failedTakoyaki: TakoyakiItem.getFailed()
     }
   },
   methods: {

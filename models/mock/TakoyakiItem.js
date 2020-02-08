@@ -6,5 +6,13 @@ export default [
     imgURL: '/image/takoyaki/takoyaki_character.png',
     addedAt: new Date('2020-02-03T06:00:00'),
     editedAt: new Date('2020-02-03T06:00:00')
+  },
+  {
+    id: 2,
+    name: 'コゲ太',
+    rarity: 1,
+    imgURL: '/image/takoyaki/failed.png',
+    addedAt: new Date('2020-02-09T01:07:00'),
+    editedAt: new Date('2020-02-09T01:07:00')
   }
 ]

@@ -21,4 +21,9 @@ export default class TakoyakiItem extends TakoyakiBaseModel {
       return null
     }
   }
+
+  static getFailed() {
+    const failedId = 2
+    return TakoyakiItem.get(failedId)
+  }
 }
