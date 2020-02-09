@@ -39,14 +39,18 @@ export default class Todo extends TakoyakiBaseModel {
     return this._getDate(this.deadline, formatStr)
   }
 
-  clear() {
+  async clear() {
     const clearData = {
-      id: TodoClear.lastId + 1,
       todo: this,
       takoyakiId: 1
     }
-    this.clearObj = new TodoClear(clearData)
+    this.clearObj = TodoClear.create(clearData)
+    this.clearId = this.clearObj.id
+    this.clearedAt = new Date()
     this.isCleared = true
+
+    await this._save()
+    return this
   }
 
   getTakoyakiImageURL() {
@@ -72,7 +76,7 @@ export default class Todo extends TakoyakiBaseModel {
   async _save() {
     const toSaveJson = {
       id: this.id,
-      clearedId: this.clearedId,
+      clearId: this.clearId,
       title: this.title,
       description: this.description,
       isCleared: this.isCleared,
@@ -82,6 +86,14 @@ export default class Todo extends TakoyakiBaseModel {
     }
 
     return await db.todos.put(toSaveJson)
+  }
+
+  async loadClearData() {
+    console.log('loadClearData: ', this)
+    if (this.isCleared) {
+      this.clearObj = await TodoClear.get(this.clearId)
+    }
+    return this
   }
 
   static async getList(filter = {}) {
@@ -119,8 +131,12 @@ export default class Todo extends TakoyakiBaseModel {
     todos = todos.offset(filter.offset).limit(filter.limit)
 
     todos = await todos.sortBy('addedAt')
+    console.log(todos)
 
-    return todos.map((todo) => new Todo(todo))
+    todos = todos.map((todo) => new Todo(todo, 'load'))
+
+    todos = todos.map((todo) => todo.loadClearData())
+    return await Promise.all(todos)
   }
 
   static get(id) {

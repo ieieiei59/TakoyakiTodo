@@ -78,9 +78,13 @@ export default {
       return today <= new Date(val)
     },
     addBtnClicked() {
-      console.log('addBtnClicked')
       const todo = this.add()
-      console.log('addedTodo: ', todo)
+      this.TodoData.title = ''
+      this.TodoData.description = ''
+      this.TodoData.deadline = null
+
+      this.deadlineDate = null
+
       this.$emit('added', todo)
     }
   }
