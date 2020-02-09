@@ -1,7 +1,7 @@
 <template>
   <div>
     <ul class="todo-list">
-      <li class="todo-container" v-for="todo in todoList" :key="todo.id">
+      <li class="todo-container mb-4" v-for="todo in todoList" :key="todo.id">
         <todo-item :todoItem="todo" @deleted="deleted"></todo-item>
       </li>
     </ul>

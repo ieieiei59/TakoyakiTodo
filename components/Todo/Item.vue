@@ -7,6 +7,17 @@
       class="todo-item-container"
       @click.stop="openTodoModal()"
     >
+      <div class="todo-item">
+        <h3
+          :class="
+            todoItem.isClearedOrFailed()
+              ? 'todo-item__text--cleared'
+              : 'todo-item__text'
+          "
+        >
+          {{ todoItem.title }}
+        </h3>
+      </div>
       <transition enter-active-class="animated pulse">
         <img
           v-if="todoItem.isCleared"
@@ -21,9 +32,9 @@
           v-if="todoItem.isFailed()"
         />
       </transition>
-      <div v-if="!todoItem.isCleared && !todoItem.isFailed()" class="todo-item">
-        <h3>{{ todoItem.title }}</h3>
-      </div>
+    </div>
+    <div class="todo-item__ex-text pa-2 mt-1">
+      <p class="mb-0">{{ todoItem.description }}</p>
     </div>
 
     <v-dialog v-model="todoDialog.isActive">
@@ -37,7 +48,12 @@
           <v-btn @click.stop="todoDialog.isActive = false">閉じる</v-btn>
           <v-spacer />
           <v-btn color="red" @click.stop="deleteTodo()">削除</v-btn>
-          <v-btn color="primary" @click.stop="clearTodo()">達成</v-btn>
+          <v-btn
+            color="primary"
+            @click.stop="clearTodo()"
+            :disabled="todoItem.isClearedOrFailed()"
+            >{{ clearButtonText }}</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -61,9 +77,7 @@ export default {
   },
   methods: {
     openTodoModal() {
-      if (!this.todoItem.isCleared) {
-        this.todoDialog.isActive = true
-      }
+      this.todoDialog.isActive = true
     },
     clearTodo() {
       this.todoDialog.isActive = false
@@ -74,11 +88,24 @@ export default {
       this.todoItem.delete()
       this.$emit('deleted', this.todoItem)
     }
+  },
+  computed: {
+    clearButtonText() {
+      if (this.todoItem.isCleared) {
+        return '達成済み'
+      } else if (this.todoItem.isFailed()) {
+        return '達成失敗'
+      } else {
+        return '達成'
+      }
+    }
   }
 }
 </script>
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css?family=Kosugi+Maru&display=swap&subset=japanese');
+
 .todo-item-container {
   position: relative;
   display: flex;
@@ -111,6 +138,22 @@ export default {
   }
 
   .todo-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &__text {
+      font-family: 'Kosugi Maru', sans-serif;
+      &--cleared {
+        font-family: 'Kosugi Maru', sans-serif;
+        z-index: 1;
+        background-color: rgba(107, 107, 107, 0.5);
+      }
+    }
     &--cleared {
       // background-color: rgba(0, 0, 0, 0.4);
       color: white;
@@ -118,5 +161,11 @@ export default {
       width: 100%;
     }
   }
+}
+
+.todo-item__ex-text {
+  font-family: 'Kosugi Maru', sans-serif;
+
+  background-color: rgba(107, 107, 107, 0.15);
 }
 </style>
