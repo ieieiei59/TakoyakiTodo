@@ -61,6 +61,9 @@ export default {
   },
   watch: {
     deadlineDate(newDate) {
+      if (newDate === null) {
+        return
+      }
       const deadline = newDate.split('-')
       this.TodoData.deadline = new Date(
         deadline[0],

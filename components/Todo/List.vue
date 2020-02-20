@@ -2,7 +2,11 @@
   <div>
     <ul class="todo-list">
       <li class="todo-container mb-4" v-for="todo in todoList" :key="todo.id">
-        <todo-item :todoItem="todo" @deleted="deleted"></todo-item>
+        <todo-item
+          :todoItem="todo"
+          @deleted="deleted"
+          @cleared="cleared"
+        ></todo-item>
       </li>
     </ul>
   </div>
@@ -22,8 +26,10 @@ export default {
   created() {},
   methods: {
     deleted(todo) {
-      console.log(todo)
       this.$emit('deleteTodo', todo)
+    },
+    cleared(todo) {
+      this.$emit('clearTodo', todo)
     }
   }
 }
