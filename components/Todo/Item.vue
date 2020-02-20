@@ -97,6 +97,7 @@ export default {
     clearTodo() {
       this.todoDialog.isActive = false
       this.todoItem.clear()
+      this.$emit('cleared', this.todoItem)
     },
     deleteTodo() {
       this.todoDialog.isActive = false

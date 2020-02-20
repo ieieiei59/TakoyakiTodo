@@ -73,6 +73,22 @@ export default class Todo extends TakoyakiBaseModel {
     return this._save()
   }
 
+  isDaily() {
+    return utilDate.today <= this.deadline && this.deadline < utilDate.tomorrow
+  }
+
+  isWeekly() {
+    return (
+      utilDate.tomorrow <= this.deadline && this.deadline < utilDate.nextWeek
+    )
+  }
+
+  isMonthly() {
+    return (
+      utilDate.nextWeek <= this.deadline && this.deadline < utilDate.nextMonth
+    )
+  }
+
   async delete() {
     return await db.todos.delete(this.id)
   }
@@ -103,7 +119,7 @@ export default class Todo extends TakoyakiBaseModel {
   static async getList(filter = {}) {
     const defaultFilter = {
       offset: 0,
-      limit: 20,
+      limit: 200,
       daily: false,
       weekly: false,
       monthly: false
@@ -135,7 +151,6 @@ export default class Todo extends TakoyakiBaseModel {
     todos = todos.offset(filter.offset).limit(filter.limit)
 
     todos = await todos.sortBy('addedAt')
-    console.log(todos)
 
     todos = todos.map((todo) => new Todo(todo, 'load'))
 

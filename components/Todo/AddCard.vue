@@ -2,7 +2,7 @@
   <v-card>
     <v-card-title>ToDoの追加</v-card-title>
     <v-card-text>
-      <todo-form v-model="newTodo"></todo-form>
+      <todo-form v-model="newTodo" ref="todoForm"></todo-form>
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
@@ -31,6 +31,7 @@ export default {
       this.newTodo.save()
       this.$emit('added', this.newTodo)
 
+      this.$refs.todoForm.deadlineDate = null
       this.newTodo = Todo.blankCreate()
     }
   }
