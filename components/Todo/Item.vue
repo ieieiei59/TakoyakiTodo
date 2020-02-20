@@ -45,17 +45,25 @@
           <p><span>期日: </span>{{ todoItem.getDeadline() }}</p>
         </v-card-text>
         <v-card-actions>
-          <v-btn @click.stop="todoDialog.isActive = false">閉じる</v-btn>
-          <v-spacer />
-          <v-btn color="red" @click.stop="deleteTodo()">削除</v-btn>
           <v-btn
             color="primary"
             @click.stop="clearTodo()"
             :disabled="todoItem.isClearedOrFailed()"
             >{{ clearButtonText }}</v-btn
           >
+          <v-btn color="orange" @click.stop="editTodo()">編集</v-btn>
+          <v-btn @click.stop="todoDialog.isActive = false">閉じる</v-btn>
+          <v-spacer />
+          <v-btn color="red" @click.stop="deleteTodo()">削除</v-btn>
         </v-card-actions>
       </v-card>
+    </v-dialog>
+    <v-dialog v-model="editCard.isActive">
+      <edit-card
+        v-if="!!todoItem"
+        v-model="todoItem"
+        @saved="editCard.isActive = false"
+      ></edit-card>
     </v-dialog>
   </div>
 </template>
@@ -63,6 +71,7 @@
 <script>
 import Todo from '@@/models/Todo'
 import TakoyakiItem from '@@/models/TakoyakiItem'
+import EditCard from '@/components/Todo/EditCard'
 
 export default {
   name: 'TodoItem',
@@ -72,8 +81,14 @@ export default {
       todoDialog: {
         isActive: false
       },
+      editCard: {
+        isActive: false
+      },
       failedTakoyaki: TakoyakiItem.getFailed()
     }
+  },
+  components: {
+    EditCard
   },
   methods: {
     openTodoModal() {
@@ -87,6 +102,11 @@ export default {
       this.todoDialog.isActive = false
       this.todoItem.delete()
       this.$emit('deleted', this.todoItem)
+    },
+    editTodo() {
+      this.todoDialog.isActive = false
+      console.log(this.todoItem)
+      this.editCard.isActive = true
     }
   },
   computed: {

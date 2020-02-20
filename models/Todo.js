@@ -69,6 +69,10 @@ export default class Todo extends TakoyakiBaseModel {
     return this.isFailed() || this.isCleared
   }
 
+  save() {
+    return this._save()
+  }
+
   async delete() {
     return await db.todos.delete(this.id)
   }
@@ -158,14 +162,28 @@ export default class Todo extends TakoyakiBaseModel {
    *   deadline: 期日(Date)}
    */
   static add(json) {
+    const todo = Todo.create(json)
+    todo._save()
+    return todo
+  }
+
+  static create(json) {
     json.addedAt = new Date()
     json.editedAt = new Date()
     json.id = v4()
     json.isCleared = false
     json.crearId = null
 
-    const todo = new Todo(json, 'add')
-    todo._save()
-    return todo
+    return new Todo(json, 'add')
+  }
+
+  static blankCreate() {
+    const json = {
+      title: '',
+      description: '',
+      deadline: null
+    }
+
+    return Todo.create(json)
   }
 }
