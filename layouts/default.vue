@@ -35,9 +35,12 @@
       </v-container>
     </v-content>
 
-    <v-footer :fixed="fixed" app>
-      <span>&copy; 2019</span>
-    </v-footer>
+    <v-bottom-navigation v-model="bottomNav" fixed app dark shift>
+      <v-btn v-for="nav in bottomNavs" :key="nav.title" :to="nav.to">
+        <span>{{ nav.title }}</span>
+        <v-icon>{{ nav.icon }}</v-icon>
+      </v-btn>
+    </v-bottom-navigation>
   </v-app>
 </template>
 
@@ -51,14 +54,18 @@ export default {
       items: [
         {
           icon: 'mdi-apps',
-          title: 'ToDoリスト',
-          to: '/todo/list'
+          title: 'ホーム',
+          to: '/'
         }
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'タコヤキTODO'
+      title: 'タコヤキTODO',
+      bottomNavs: [
+        { title: 'ToDoリスト', icon: 'mdi-view-list', to: '/todo/list' }
+      ],
+      bottomNav: 0
     }
   }
 }
