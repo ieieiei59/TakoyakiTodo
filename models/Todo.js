@@ -89,6 +89,14 @@ export default class Todo extends TakoyakiBaseModel {
     )
   }
 
+  getRemainingDays() {
+    if (this.isClearedOrFailed()) {
+      return 0
+    } else {
+      return this.deadline.getDate() - utilDate.today.getDate() + 1
+    }
+  }
+
   async delete() {
     return await db.todos.delete(this.id)
   }

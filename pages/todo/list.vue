@@ -115,10 +115,14 @@ export default {
           return -1
         })
         notCleared.sort((a, b) => {
-          if (a.addedAt < b.addedAt) {
-            return 1
+          if (a.getRemainingDays() === b.getRemainingDays()) {
+            if (a.addedAt < b.addedAt) {
+              return 1
+            }
+            return -1
+          } else {
+            return a.getRemainingDays() - b.getRemainingDays()
           }
-          return -1
         })
         this.todoLists[type.key] = [...notCleared, ...cleared]
       }
