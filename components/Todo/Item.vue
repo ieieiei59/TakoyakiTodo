@@ -17,6 +17,9 @@
         >
           {{ todoItem.title }}
         </h3>
+        <h4 v-if="!todoItem.isClearedOrFailed()">
+          [残り: {{ todoItem.getRemainingDays() }}日]
+        </h4>
       </div>
       <transition enter-active-class="animated pulse">
         <img
@@ -167,6 +170,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     &__text {
       font-family: 'Kosugi Maru', sans-serif;
       &--cleared {
