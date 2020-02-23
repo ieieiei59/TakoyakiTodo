@@ -42,9 +42,9 @@
       >
         {{ todoItem.title }}
       </p>
-      <span class="mb-0 overline text-righ text--disabled">
+      <p class="mb-0 overline text-right text--disabled">
         [残り: {{ todoItem.getRemainingDays() }}日]
-      </span>
+      </p>
       <v-clamp
         autoresize
         :max-lines="2"
