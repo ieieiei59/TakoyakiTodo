@@ -19,7 +19,8 @@
     "dateformat": "^3.0.3",
     "dexie": "^2.0.4",
     "nuxt": "^2.0.0",
-    "uuid": "^3.4.0"
+    "uuid": "^3.4.0",
+    "vue-clamp": "^0.2.2"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.0.0",

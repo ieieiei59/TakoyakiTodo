@@ -7,7 +7,7 @@
       class="todo-item-container"
       @click.stop="openTodoModal()"
     >
-      <div class="todo-item">
+      <!-- <div class="todo-item-title">
         <h3
           :class="
             todoItem.isClearedOrFailed()
@@ -20,7 +20,7 @@
         <h4 v-if="!todoItem.isClearedOrFailed()">
           [残り: {{ todoItem.getRemainingDays() }}日]
         </h4>
-      </div>
+      </div> -->
       <transition enter-active-class="animated pulse">
         <img
           v-if="todoItem.isCleared"
@@ -37,7 +37,22 @@
       </transition>
     </div>
     <div class="todo-item__ex-text pa-2 mt-1">
-      <p class="mb-0">{{ todoItem.description }}</p>
+      <p
+        class="todo-item__ex-text-title mb-0 subtitle-1 text-center text-no-wrap text-truncate"
+      >
+        {{ todoItem.title }}
+      </p>
+      <span class="mb-0 overline text-righ text--disabled">
+        [残り: {{ todoItem.getRemainingDays() }}日]
+      </span>
+      <v-clamp
+        autoresize
+        :max-lines="2"
+        ellipsis="..."
+        class="todo-item__ex-text-description mb-0 caption"
+      >
+        {{ todoItem.description }}
+      </v-clamp>
     </div>
 
     <v-dialog v-model="todoDialog.isActive">
@@ -75,10 +90,14 @@
 import Todo from '@@/models/Todo'
 import TakoyakiItem from '@@/models/TakoyakiItem'
 import EditCard from '@/components/Todo/EditCard'
+import VClamp from 'vue-clamp'
 
 export default {
   name: 'TodoItem',
   props: { todoItem: Todo },
+  created() {
+    console.log(this)
+  },
   data() {
     return {
       todoDialog: {
@@ -91,7 +110,8 @@ export default {
     }
   },
   components: {
-    EditCard
+    EditCard,
+    VClamp
   },
   methods: {
     openTodoModal() {
@@ -171,6 +191,13 @@ export default {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    &-title {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: auto;
+    }
     &__text {
       font-family: 'Kosugi Maru', sans-serif;
       &--cleared {
@@ -189,8 +216,14 @@ export default {
 }
 
 .todo-item__ex-text {
+  $background-color: rgb(72, 72, 72);
   font-family: 'Kosugi Maru', sans-serif;
 
-  background-color: rgba(107, 107, 107, 0.15);
+  background-color: $background-color;
+
+  &-description {
+    overflow: hidden;
+    max-height: 2.5rem;
+  }
 }
 </style>
