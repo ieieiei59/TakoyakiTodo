@@ -2,11 +2,16 @@
   <v-card>
     <v-card-title>ToDoの編集</v-card-title>
     <v-card-text>
-      <todo-form v-model="todo"></todo-form>
+      <todo-form
+        v-model="todo"
+        @changeValid="(v) => (formValid = v)"
+      ></todo-form>
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn color="primary" @click="saveBtnClicked()">保存</v-btn>
+      <v-btn color="primary" @click="saveBtnClicked()" :disabled="!formValid"
+        >保存</v-btn
+      >
     </v-card-actions>
   </v-card>
 </template>
@@ -17,7 +22,9 @@ import TodoForm from '@/components/Todo/Form'
 export default {
   name: 'TodoEditCard',
   data() {
-    return {}
+    return {
+      formValid: false
+    }
   },
   props: ['todoProp'],
   model: {

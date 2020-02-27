@@ -2,11 +2,17 @@
   <v-card>
     <v-card-title>ToDoの追加</v-card-title>
     <v-card-text>
-      <todo-form v-model="newTodo" ref="todoForm"></todo-form>
+      <todo-form
+        v-model="newTodo"
+        ref="todoForm"
+        @changeValid="(v) => (formValid = v)"
+      ></todo-form>
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn color="primary" @click="addBtnClicked()">追加</v-btn>
+      <v-btn color="primary" @click="addBtnClicked()" :disabled="!formValid"
+        >追加</v-btn
+      >
     </v-card-actions>
   </v-card>
 </template>
@@ -19,7 +25,8 @@ export default {
   name: 'TodoAddCard',
   data() {
     return {
-      newTodo: Todo.blankCreate()
+      newTodo: Todo.blankCreate(),
+      formValid: false
     }
   },
   created() {},
