@@ -17,7 +17,7 @@
     "@nuxtjs/pwa": "^3.0.0-0",
     "animate.css": "^3.7.2",
     "dateformat": "^3.0.3",
-    "dexie": "^2.0.4",
+    "dexie": "^3.2.2",
     "nuxt": "^2.0.0",
     "uuid": "^3.4.0",
     "vue-clamp": "^0.2.2"
